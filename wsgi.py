@@ -40,6 +40,8 @@ notfound = """
 <body>
 <h1>Sorry, but the content you are looking for is not aviable!</h1>
 <p>File or directory %(path)s not found.</p>
+</body>
+</html>
 """
 
 def ls(rootdir):
