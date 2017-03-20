@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
+
 import os
 import os.path
 import datetime
 import mimetypes
+from settings import datapath
 
-basepath = os.path.dirname(os.path.abspath(__file__)) + "/data"
 mimetypes.init()
 
 html_before = """
@@ -37,7 +39,7 @@ notfound = """
     <title>Not found</title>
     <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" >
     <link rel="canonical" href="http://images.freifunk-westerwald.de/" >
-    <link rel="stylesheet" href="main.css" >
+    <link rel="stylesheet" href="/static/main.css" >
 </head>
 <body>
 <h1>Sorry, but the content you are looking for is not aviable!</h1>
@@ -96,19 +98,11 @@ def resolve_mimetype(path):
     extension = os.path.splitext(path)[1]
     return mimetypes.types_map[extension]
 
-def is_css_file(path):
-    extension = os.path.splitext(path)[1]
-    return extension == ".css"
-
-def is_font_file(path):
-    extension = os.path.splitext(path)[1]
-    return extension == ".ttf"
-
 def application(environ, start_response):
 
     # Get REQUEST_URI from environment
     req_uri = environ['REQUEST_URI']
-    path = basepath + req_uri
+    path = datapath + req_uri
 
     # Set status content_type to default values
     status = '200 OK'
@@ -123,16 +117,6 @@ def application(environ, start_response):
     elif os.path.isfile(path):
         content_type = resolve_mimetype(path)
         response_body = filecontent(path)
-    elif is_css_file(req_uri) or is_font_file(req_uri):
-        path = os.path.dirname(os.path.abspath(__file__)) + req_uri
-        if os.path.isfile(path):
-            content_type = resolve_mimetype(req_uri)
-            response_body = filecontent(path)
-        else:
-            status = '404 Not Found'
-            response_body = (notfound % {
-                'path': req_uri
-            }).encode('utf-8')
     else:
         status = '404 Not Found'
         response_body = (notfound % {

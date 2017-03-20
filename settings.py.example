@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+import os.path
+
+# Settings file
+
+# Data path in application path
+datapath = os.path.dirname(os.path.abspath(__file__)) + "/data"
+# Data path external
+# datapath = "/path/to/your/data"
