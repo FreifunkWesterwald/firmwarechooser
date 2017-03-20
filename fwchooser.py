@@ -39,7 +39,7 @@ notfound = """
     <title>Not found</title>
     <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" >
     <link rel="canonical" href="http://images.freifunk-westerwald.de/" >
-    <link rel="stylesheet" href="/static/main.css" >
+    <link rel="stylesheet" href="main.css" >
 </head>
 <body>
 <h1>Sorry, but the content you are looking for is not aviable!</h1>
