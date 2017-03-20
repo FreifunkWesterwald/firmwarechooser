@@ -15,7 +15,6 @@ html_before = """
     <meta charset="utf-8">
     <title>Index of %(path)s</title>
     <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" >
-    <link rel="canonical" href="http://images.freifunk-westerwald.de/" >
     <link rel="stylesheet" href="main.css" >
 </head>
 <body>
@@ -38,7 +37,6 @@ notfound = """
     <meta charset="utf-8">
     <title>Not found</title>
     <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" >
-    <link rel="canonical" href="http://images.freifunk-westerwald.de/" >
     <link rel="stylesheet" href="main.css" >
 </head>
 <body>
