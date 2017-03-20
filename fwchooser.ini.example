@@ -1,7 +1,6 @@
 [uwsgi]
 chdir           = /path/to/your/project
 module          = fwchooser:application
-home            = /path/to/your/project/virtualenv
 
 master          = true
 processes       = 6
