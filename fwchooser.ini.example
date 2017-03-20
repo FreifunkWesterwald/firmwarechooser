@@ -8,3 +8,8 @@ processes       = 6
 socket          = fwchooser.sock
 chmod-socket    = 664
 vacuum          = true
+
+uid             = http
+gid             = http
+
+die-on-term     = true

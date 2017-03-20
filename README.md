@@ -15,4 +15,4 @@
 - install globally via pip: *uwsgi*
 - cp *fwchooser.ini.example* to *fwchooser.ini*
 - change *chdir* in *fwchooser.ini* to the correct path
-- copy *fwchooser.service* to */etc/systemd/system*
+- copy *fwchooser.service.example* to */etc/systemd/system* and change the path to fwchooser.ini

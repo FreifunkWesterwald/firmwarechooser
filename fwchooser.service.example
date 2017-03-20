@@ -1,0 +1,10 @@
+[Unit]
+Description=uWSGI instance to serve firmware chooser
+After=syslog.target
+
+[Service]
+ExecStart=/usr/bin/uwsgi --ini /path/to/fwchooser.ini
+Type=notify
+
+[Install]
+WantedBy=multi-user.target
