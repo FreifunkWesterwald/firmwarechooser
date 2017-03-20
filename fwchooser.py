@@ -9,7 +9,6 @@ from settings import datapath
 mimetypes.init()
 
 html_before = """
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -31,7 +30,6 @@ html_after = """
 """
 
 notfound = """
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
