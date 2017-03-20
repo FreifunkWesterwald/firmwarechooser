@@ -99,12 +99,18 @@ def application(environ, start_response):
     # Get REQUEST_URI from environment
     req_uri = environ['REQUEST_URI']
     path = datapath + req_uri
+    print(req_uri)
 
     # Set status content_type to default values
     status = '200 OK'
     content_type = 'text/html'
+    additional_header = []
 
     if os.path.isdir(path):
+        # Send 301 to url ending with '/', because relative links
+        if not req_uri.endswith('/'):
+            status = '301 Moved Permanently'
+            additional_header.append(('Location', req_uri + '/'))
         response_body = (html_before % {
             'path': req_uri or '/'
         }).encode('utf-8')
@@ -124,6 +130,11 @@ def application(environ, start_response):
         ('Content-Type', content_type),
         ('Content-Length', str(len(response_body)))
     ]
+    for header in additional_header:
+        response_header.append(header)
+
+    for header in response_header:
+        print(header)
 
     start_response(status, response_header)
     return [response_body]
