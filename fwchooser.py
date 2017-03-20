@@ -13,17 +13,18 @@ html_before = """
 <head>
     <meta charset="utf-8">
     <title>Index of %(path)s</title>
-    <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" >
     <link rel="stylesheet" href="main.css" >
 </head>
 <body>
 <h1>Index of %(path)s</h1>
 <hr>
 <table>
+<tbody>
 <tr><th class="n">File Name</th><th class="s">File Size</th><th class="d">Date</th></tr>
 """
 
 html_after = """
+</tbody>
 </table>
 </body>
 </html>
@@ -34,7 +35,6 @@ notfound = """
 <head>
     <meta charset="utf-8">
     <title>Not found</title>
-    <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" >
     <link rel="stylesheet" href="main.css" >
 </head>
 <body>
