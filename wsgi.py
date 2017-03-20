@@ -12,8 +12,9 @@ html_before = """
 <head>
     <meta charset="utf-8">
     <title>Index of %(path)s</title>
-    <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" />
-    <link rel="canonical" href="http://images.freifunk-westerwald.de/" />
+    <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" >
+    <link rel="canonical" href="http://images.freifunk-westerwald.de/" >
+    <link rel="stylesheet" href="main.css" >
 </head>
 <body>
 <h1>Index of %(path)s</h1>
@@ -34,15 +35,29 @@ notfound = """
 <head>
     <meta charset="utf-8">
     <title>Not found</title>
-    <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" />
-    <link rel="canonical" href="http://images.freifunk-westerwald.de/" />
+    <link rel="author" href="https://twitter.com/thepaffy" title="thepaffy on Twitter" >
+    <link rel="canonical" href="http://images.freifunk-westerwald.de/" >
+    <link rel="stylesheet" href="main.css" >
 </head>
 <body>
 <h1>Sorry, but the content you are looking for is not aviable!</h1>
-<p>File or directory %(path)s not found.</p>
+<p>File or directory %(path)s <b>not</b> found.</p>
+<p>Go back to <a href="/">index</a>.</p>
 </body>
 </html>
 """
+
+def human_readable(size,precision=2):
+    suffixes=['B','KB','MB','GB','TB']
+    suffixIndex = 0
+    while size > 1024 and suffixIndex < 4:
+        suffixIndex += 1 #increment the index of the suffix
+        size = size/1024.0 #apply the division
+    if isinstance(size, int):
+        ret = "%d %s"%(size,suffixes[suffixIndex])
+    else:
+        ret = "%.*f %s"%(precision,size,suffixes[suffixIndex])
+    return ret
 
 def ls(rootdir):
     # First entry (Back entry)
@@ -58,16 +73,16 @@ def ls(rootdir):
             # Gather name, size and modify date
             name = entry.name
             if entry.is_file():
-                size = str(os.path.getsize(entry.path))
+                sz = human_readable(os.path.getsize(entry.path))
             else:
-                size = "-"
+                sz = "-"
             dt = datetime.datetime.fromtimestamp(os.path.getmtime(entry.path))
             date = dt.strftime("%a %b %d %H:%M:%S")
             # Concat entry
             line = '\n<tr><td class="n"><a href="' + name + '">' + name + '</a>'
             if entry.is_dir():
                 line += '/'
-            line += '</td><td class="s">' + size + '</td><td class="d">' + date + '</td></tr>'
+            line += '</td><td class="s">' + sz + '</td><td class="d">' + date + '</td></tr>'
             index += line
     return index
 
@@ -80,6 +95,14 @@ def filecontent(path):
 def resolve_mimetype(path):
     extension = os.path.splitext(path)[1]
     return mimetypes.types_map[extension]
+
+def is_css_file(path):
+    extension = os.path.splitext(path)[1]
+    return extension == ".css"
+
+def is_font_file(path):
+    extension = os.path.splitext(path)[1]
+    return extension == ".ttf"
 
 def application(environ, start_response):
 
@@ -100,6 +123,16 @@ def application(environ, start_response):
     elif os.path.isfile(path):
         content_type = resolve_mimetype(path)
         response_body = filecontent(path)
+    elif is_css_file(req_uri) or is_font_file(req_uri):
+        path = os.path.dirname(os.path.abspath(__file__)) + req_uri
+        if os.path.isfile(path):
+            content_type = resolve_mimetype(req_uri)
+            response_body = filecontent(path)
+        else:
+            status = '404 Not Found'
+            response_body = (notfound % {
+                'path': req_uri
+            }).encode('utf-8')
     else:
         status = '404 Not Found'
         response_body = (notfound % {
