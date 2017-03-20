@@ -13,7 +13,7 @@ html_before = """
 <head>
     <meta charset="utf-8">
     <title>Index of %(path)s</title>
-    <link rel="stylesheet" href="main.css" >
+    <link rel="stylesheet" href="/main.css" >
 </head>
 <body>
 <h1>Index of %(path)s</h1>
@@ -35,7 +35,7 @@ notfound = """
 <head>
     <meta charset="utf-8">
     <title>Not found</title>
-    <link rel="stylesheet" href="main.css" >
+    <link rel="stylesheet" href="/main.css" >
 </head>
 <body>
 <h1>Sorry, but the content you are looking for is not aviable!</h1>
