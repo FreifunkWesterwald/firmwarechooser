@@ -133,8 +133,5 @@ def application(environ, start_response):
     for header in additional_header:
         response_header.append(header)
 
-    for header in response_header:
-        print(header)
-
     start_response(status, response_header)
     return [response_body]
