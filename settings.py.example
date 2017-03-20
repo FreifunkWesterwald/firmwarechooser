@@ -7,3 +7,9 @@ import os.path
 datapath = os.path.dirname(os.path.abspath(__file__)) + "/data"
 # Data path external
 # datapath = "/path/to/your/data"
+
+# AdditionAL dict of mime types
+mimetypes = {
+    '.gz' : 'application/x-gzip',
+    '.manifest' : 'text/plain'
+}

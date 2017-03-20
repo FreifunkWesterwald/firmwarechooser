@@ -4,7 +4,7 @@ import os
 import os.path
 import datetime
 import mimetypes
-from settings import datapath
+import settings
 
 mimetypes.init()
 
@@ -92,13 +92,19 @@ def filecontent(path):
 
 def resolve_mimetype(path):
     extension = os.path.splitext(path)[1]
-    return mimetypes.types_map[extension]
+    if extension in mimetypes.types_map:
+        mime_type = mimetypes.types_map[extension]
+    elif extension in settings.mimetypes:
+        mime_type = settings.mimetypes[extension]
+    else:
+        mime_type = 'application/octet-stream'
+    return mime_type
 
 def application(environ, start_response):
 
     # Get REQUEST_URI from environment
     req_uri = environ['REQUEST_URI']
-    path = datapath + req_uri
+    path = settings.datapath + req_uri
     print(req_uri)
 
     # Set status content_type to default values
