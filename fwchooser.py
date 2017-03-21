@@ -8,7 +8,7 @@ import settings
 
 mimetypes.init()
 
-html_before = """
+html = """
 <html>
 <head>
     <meta charset="utf-8">
@@ -19,12 +19,8 @@ html_before = """
 <h1>Index of %(path)s</h1>
 <hr>
 <table>
-<tbody>
 <tr><th class="n">File Name</th><th class="s">File Size</th><th class="d">Date</th></tr>
-"""
-
-html_after = """
-</tbody>
+%(table)s
 </table>
 </body>
 </html>
@@ -117,11 +113,13 @@ def application(environ, start_response):
         if not req_uri.endswith('/'):
             status = '301 Moved Permanently'
             additional_header.append(('Location', req_uri + '/'))
-        response_body = (html_before % {
-            'path': req_uri or '/'
-        }).encode('utf-8')
-        response_body += ls(path).encode('utf-8')
-        response_body += html_after.encode('utf-8')
+            response_body = b""
+        else:
+            listening = ls(path)
+            response_body = (html % {
+                'path': req_uri or '/',
+                'table': listening
+            }).encode('utf-8')
     elif os.path.isfile(path):
         content_type = resolve_mimetype(path)
         response_body = filecontent(path)
