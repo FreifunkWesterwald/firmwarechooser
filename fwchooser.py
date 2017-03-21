@@ -8,38 +8,13 @@ import settings
 
 mimetypes.init()
 
-html = """
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Index of %(path)s</title>
-    <link rel="stylesheet" href="/main.css" >
-</head>
-<body>
-<h1>Index of %(path)s</h1>
-<hr>
-<table>
-<tr><th class="n">File Name</th><th class="s">File Size</th><th class="d">Date</th></tr>
-%(table)s
-</table>
-</body>
-</html>
-"""
+hf = open('templates/html.template', 'r')
+html = hf.read()
+hf.close()
 
-notfound = """
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Not found</title>
-    <link rel="stylesheet" href="/main.css" >
-</head>
-<body>
-<h1>Sorry, but the content you are looking for is not aviable!</h1>
-<p>File or directory %(path)s <b>not</b> found.</p>
-<p>Go back to <a href="/">index</a>.</p>
-</body>
-</html>
-"""
+nf = open('templates/notfound.template', 'r')
+notfound = nf.read()
+nf.close()
 
 def human_readable(size,precision=2):
     suffixes=['B','KB','MB','GB','TB']
@@ -78,6 +53,7 @@ def ls(rootdir):
                 line += '/'
             line += '</td><td class="s">' + sz + '</td><td class="d">' + date + '</td></tr>'
             index += line
+        it.close()
     return index
 
 def filecontent(path):
@@ -96,6 +72,7 @@ def resolve_mimetype(path):
         mime_type = 'application/octet-stream'
     return mime_type
 
+# function called from uwsgi
 def application(environ, start_response):
 
     # Get REQUEST_URI from environment
