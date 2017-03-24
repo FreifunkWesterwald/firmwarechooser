@@ -17,17 +17,17 @@ body {
     min-width: 700px;
     max-width: 1100px;
     margin: auto;
-    font-size: 120%;
+    font-size: 130%;
     background-color: #fff;
-}
-
-hr {
-    display: none;
 }
 
 h1 {
     font-size: 120%;
     line-height: 1em;
+}
+
+hr {
+    display: none;
 }
 
 table {
@@ -55,16 +55,16 @@ th {
 }
 
 tr {
-	background: rgba(255, 255, 255, 0.8);
+	background: rgba(247, 247, 247, 0.8);
 }
 
 tr:hover {
-	background: rgba(255, 255, 255, 0.6);
+	background: rgba(247, 247, 247, 0.6);
 }
 
 th, td {
 	font-size: 14px;
-	height: 20px;
+	height: 25px;
 	vertical-align: middle;
 	white-space: nowrap;
 	padding: 0.2em 0.5em;
@@ -72,14 +72,16 @@ th, td {
 }
 
 a:link, a:visited {
-	color: #337ab7;
+	color: #222;
 	font-weight: bold;
 	text-decoration: none;
+    border-bottom: 1px dotted #222;
 }
 
 a:hover, a:active, a:focus {
-	color: #23527c;
+	color: #222;
 	text-decoration: underline;
+    border-bottom: 1px solid #222;
 }
 
 .s {
