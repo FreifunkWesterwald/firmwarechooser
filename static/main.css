@@ -80,7 +80,7 @@ a:link, a:visited {
 
 a:hover, a:active, a:focus {
 	color: #222;
-	text-decoration: underline;
+	text-decoration: none;
     border-bottom: 1px solid #222;
 }
 
