@@ -60,6 +60,8 @@ def genrate_index(rootdir, indexpath, readmename):
         json.dump(index, f, ensure_ascii=False)
 
 def read_timestamp(indexpath):
+    if not os.path.isfile(indexpath):
+        return 0
     with open(indexpath, 'r') as f:
         index = json.load(f)
     return int(index['timestamp'])
